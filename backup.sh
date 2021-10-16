@@ -1,6 +1,6 @@
 #!/bin/bash
 	if [ -z `which sshpass` ]; then
-			sudo apt-get install sshpass -y
+		sudo apt-get install sshpass -y
 	fi
 # Save-log
 savelog=0

@@ -10,8 +10,8 @@ logfile="rsync-log.txt"
 passwd=""
 user=""
 host=""
-sciezkaremotez="" # (folder/file) to backup
-sciezkalocalsave="" # save (local)
+filestobackup="" # (folder/file) to backup
+filestosave="" # save (local)
 
 # Colors
 ESC_SEQ="\x1b["
@@ -26,13 +26,13 @@ COL_CYAN=$ESC_SEQ"36;01m"
 # Script
 echo -e "$COL_GREEN Started backup$COL_RESET"
 DATE="`date +%Y-%m-%d-%H-%M`"
-sshpass -p $passwd ssh $user@$host tar -cvf /home/$user/latestbackup.tar $sciezkaremotez
+sshpass -p $passwd ssh $user@$host tar -cvf /home/$user/latestbackup.tar $filestobackup
 echo -e "$COL_GREEN Downloading from host $host $COL_RESET"
 if [ "$savelog" -eq "1" ]; then
 touch $logfile
-sshpass -p $passwd rsync -avz --progress --log-file=$logfile $user@$host:/home/$user/latestbackup.tar $sciezkalocalsave/backup-$DATE.tar
+sshpass -p $passwd rsync -avz --progress --log-file=$logfile $user@$host:/home/$user/latestbackup.tar $filestosave/backup-$DATE.tar
 else
-    sshpass -p $passwd rsync -avz $user@$host:/home/$user/latestbackup.tar $sciezkalocalsave/backup-$DATE.tar
+    sshpass -p $passwd rsync -avz $user@$host:/home/$user/latestbackup.tar $filestosave/backup-$DATE.tar
 fi
 sshpass -p $passwd ssh $user@$host rm /home/$user/latestbackup.tar
 echo -e "$COL_GREEN Backup ended at$COL_MAGENTA $DATE $COL_RESET"
